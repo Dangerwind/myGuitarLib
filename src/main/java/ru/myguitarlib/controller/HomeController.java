@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HomeController {
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index() {
         return "index 123";
     }
