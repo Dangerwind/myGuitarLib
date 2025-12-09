@@ -1,0 +1,38 @@
+spring:
+  profiles:
+    active: dev  # "prod" ???? ?????????
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    output:
+  #     ansi:
+  #       enabled: always
+  web:
+    error:
+      include-message: never
+      include-binding-errors: never
+      include-exception: false
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
+app:
+  security:
+    cookie:
+      access:
+        httpOnly: true
+        secure: true
+        sameSite: Strict  # ?????? ??????
+        maxAgeSeconds: 900       # 15 ?????
+      refresh:
+        httpOnly: true
+        secure: true
+        sameSite: Lax # ????? ? ?????? ??????
+        maxAgeSeconds: 2592000   # 30 ????
+    jwt:
+      access-token-validity-seconds: 900        # 15 ?????
+      refresh-token-validity-seconds: 2592000   # 30 ????

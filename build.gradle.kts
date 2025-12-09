@@ -1,7 +1,9 @@
 plugins {
 	java
+	application
 	id("org.springframework.boot") version "4.0.0"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("io.freefair.lombok") version "8.6"
 }
 
 group = "ru.myguitarlib"
@@ -25,17 +27,28 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	compileOnly("org.projectlombok:lombok")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("org.postgresql:postgresql")
-	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	implementation("com.h2database:h2")
+
+	// Inertia4J Spring adapter (1.0.4)
+	// implementation("io.github.inertia4j:inertia4j-spring:1.0.4")
+
+	//JsonNullableModule для сериализации JSON
+	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+
+	// чтобы мапить модели в dto
+	implementation("org.mapstruct:mapstruct:1.6.3")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+application {
+	mainClass.set("ru.myguitarlib.MyGuitarLibApplication")
 }
