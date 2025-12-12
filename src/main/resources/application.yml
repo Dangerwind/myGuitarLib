@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev  # "prod" ???? ?????????
+    active: dev  # "prod"
 
   jpa:
     show-sql: true
@@ -26,13 +26,13 @@ app:
       access:
         httpOnly: true
         secure: true
-        sameSite: Strict  # ?????? ??????
-        maxAgeSeconds: 900       # 15 ?????
+        sameSite: Strict
+        maxAgeSeconds: 900       # 15
       refresh:
         httpOnly: true
         secure: true
-        sameSite: Lax # ????? ? ?????? ??????
-        maxAgeSeconds: 2592000   # 30 ????
+        sameSite: Lax
+        maxAgeSeconds: 2592000   # 30
     jwt:
-      access-token-validity-seconds: 900        # 15 ?????
-      refresh-token-validity-seconds: 2592000   # 30 ????
+      access-token-validity-seconds: 900        # 15
+      refresh-token-validity-seconds: 2592000   # 30
