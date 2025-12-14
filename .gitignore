@@ -23,6 +23,7 @@ gradle-app.setting
 *.iws
 *.ipr
 out/
+*.pem
 
 ### VS Code
 .vscode/

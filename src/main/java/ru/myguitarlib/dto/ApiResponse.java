@@ -1,8 +1,18 @@
 package ru.myguitarlib.dto;
 
-public record ApiResponse<T>(
-        boolean success,
-        String message,
-        T data,
-        java.util.List<String> errors
-) {}
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApiResponse<T> {
+
+    private boolean success;
+    private String message;
+    private T data;
+    private List<String> errors;
+}

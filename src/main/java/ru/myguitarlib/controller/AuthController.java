@@ -1,10 +1,8 @@
 package ru.myguitarlib.controller;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +28,6 @@ import ru.myguitarlib.model.enums.RoleType;
 import ru.myguitarlib.repository.UserRepository;
 import ru.myguitarlib.security.TokenCookieService;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -58,19 +55,19 @@ public class AuthController {
             throw new ApiException("USER_EMAIL_EXISTS", "Email уже занят", HttpStatus.CONFLICT);
         }
 
+// потом заменить на Mapper userDto -> User
         var userToSave = new User();
         userToSave.setEmail(userDto.getEmail());
         userToSave.setName(userDto.getName());
         userToSave.setRole(RoleType.USER);
         userToSave.setEncryptedPassword(encoder.encode(userDto.getPassword()));
-
         var crUser = userRepository.save(userToSave);
 
+// потом заменить на Mapper User -> UserCreateDto
         var createdUserDto = new UserCreateDto();
         createdUserDto.setId(crUser.getId());
         createdUserDto.setName(crUser.getName());
         createdUserDto.setEmail(crUser.getEmail());
-
         createdUserDto.setCreatedAt(LocalDateTime.now());
 
         return ResponseEntity
@@ -119,6 +116,8 @@ public class AuthController {
                 null,
                 Collections.emptyList()
         );
+
+
         return ResponseEntity.ok(body);
     }
 
