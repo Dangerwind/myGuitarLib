@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -120,6 +122,29 @@ public class AuthController {
 
         return ResponseEntity.ok(body);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(HttpServletResponse response) {
+
+        // Делает: access_token=; Path=/; Max-Age=0; ... (и то же для refresh_token)
+        var cookies = tokenCookieService.buildCookies("", "");
+        response.addHeader("Set-Cookie", expireCookie(cookies.access()));
+        response.addHeader("Set-Cookie", expireCookie(cookies.refresh()));
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "Выход выполнен", null, List.of()));
+    }
+
+    private String expireCookie(String cookie) {
+        // Подменяем Max-Age на 0 (удаление).
+        // Если Max-Age в строке отсутствует, просто добавим.
+        if (cookie.contains("Max-Age=")) {
+            return cookie.replaceAll("Max-Age=\\d+", "Max-Age=0");
+        }
+        return cookie + "; Max-Age=0";
+    }
+
+
+
 
     private String generateToken(User user,
                                  Iterable<? extends GrantedAuthority> authorities,

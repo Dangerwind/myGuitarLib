@@ -31,7 +31,8 @@ public class TokenRefreshController {
     private final SecurityProperties securityProperties;
 
     // имя refresh-куки — такое же, как ты используешь в TokenCookieService
-    private static final String REFRESH_COOKIE_NAME = "REFRESH_TOKEN";
+    private static final String REFRESH_COOKIE_NAME = "refresh_token";
+
 
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<Void>> refresh(

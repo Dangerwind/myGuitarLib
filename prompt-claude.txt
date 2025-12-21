@@ -1,0 +1,214 @@
+MyGuitarLib — React Frontend (Production, No Hallucinations)
+
+You are a Senior Frontend Engineer.
+
+Your task is to generate a complete, production-ready frontend project for MyGuitarLib — a personal song library with chords.
+
+The frontend must work out of the box with an existing Spring Boot backend.
+
+⚠️ This is NOT a demo. Do NOT mock APIs. Do NOT invent endpoints.
+
+1. Tech stack (STRICT)
+
+React 18
+
+TypeScript
+
+Vite
+
+React Router v6
+
+TailwindCSS
+
+daisyUI
+
+Axios
+
+Functional components only
+
+Hooks only
+
+2. Backend API (FIXED, DO NOT CHANGE)
+Auth
+POST /api/v1/auth/login
+POST /api/v1/auth/register
+POST /api/v1/auth/logout
+POST /api/v1/auth/refresh
+
+Songs
+GET    /api/v1/song
+GET    /api/v1/song/{id}
+POST   /api/v1/song
+PUT    /api/v1/song/{id}
+DELETE /api/v1/song/{id}
+
+Authentication rules
+
+JWT tokens are stored in HttpOnly cookies
+
+Frontend must never read tokens
+
+Axios must always use withCredentials: true
+
+3. Authentication logic (CRITICAL)
+Requirements
+
+No redirect loops
+
+No repeated login requests
+
+Refresh token logic must be single-flight
+
+If refresh fails → logout → redirect to /login
+
+Never redirect inside axios interceptors
+
+Flow
+401 →
+ try refresh →
+   success → retry original request
+   fail → logout → /login
+
+4. Routing (STRICT)
+/
+ → HomeRedirectPage (logic only)
+
+/login
+/register
+
+/songs
+/songs/new
+/songs/:id
+/songs/:id/edit
+
+Rules
+
+/songs/** → protected
+
+/login, /register → inaccessible when authenticated
+
+/ must never render UI, only redirect
+
+5. Project structure (MANDATORY)
+src/
+ ├─ api/
+ │   ├─ http.ts
+ │   ├─ auth.ts
+ │   └─ songs.ts
+ ├─ pages/
+ │   ├─ LoginPage.tsx
+ │   ├─ RegisterPage.tsx
+ │   ├─ HomeRedirectPage.tsx
+ │   ├─ SongsPage.tsx
+ │   ├─ SongViewPage.tsx
+ │   └─ SongEditPage.tsx
+ ├─ components/
+ │   ├─ ProtectedRoute.tsx
+ │   └─ Navbar.tsx
+ ├─ types.ts
+ ├─ App.tsx
+ └─ main.tsx
+
+6. Pages behavior
+LoginPage
+
+Email + password
+
+Submit → POST /auth/login
+
+Success → /songs
+
+Error → show message
+
+If already authenticated → redirect to /songs
+
+HomeRedirectPage
+
+If authenticated → /songs
+
+Else → /login
+
+No UI rendering
+
+7. Songs
+SongsPage
+
+List of songs
+
+Click → /songs/:id
+
+Button → create new song
+
+SongViewPage
+
+Read-only
+
+Centered layout
+
+font-mono
+
+whitespace-pre-wrap
+
+Buttons:
+
+Edit
+
+Back
+
+SongEditPage
+
+Create + Edit
+
+Load song when id exists
+
+Fields:
+
+artist
+
+title
+
+comment
+
+lyrics
+
+Buttons:
+
+Save
+
+Cancel
+
+8. UI rules
+
+Tailwind + daisyUI only
+
+Clean, minimal
+
+Responsive
+
+No Bootstrap
+
+No inline styles
+
+9. Forbidden
+
+❌ Reading JWT in JS
+❌ localStorage for auth
+❌ auto-login loops
+❌ refresh on every request
+❌ redirects inside axios interceptors
+❌ mock data
+❌ TODO / FIXME
+
+10. Output requirements (IMPORTANT)
+
+Output ALL project files
+
+TypeScript only
+
+No explanations
+
+No commentary
+
+No markdown outside code blocks
+
+Production-quality code onl

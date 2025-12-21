@@ -18,7 +18,7 @@ public class TokenCookieService {
         var refreshCfg = cookieProps.getRefresh();
 
         String accessCookie = buildCookieString(
-                "ACCESS_TOKEN",
+                "access_token",
                 accessToken,
                 accessCfg.isHttpOnly(),
                 accessCfg.isSecure(),
@@ -27,7 +27,7 @@ public class TokenCookieService {
         );
 
         String refreshCookie = buildCookieString(
-                "REFRESH_TOKEN",
+                "refresh_token",
                 refreshToken,
                 refreshCfg.isHttpOnly(),
                 refreshCfg.isSecure(),
