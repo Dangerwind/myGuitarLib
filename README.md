@@ -31,3 +31,22 @@
 
 Куплю самый дешевый VPS и имя чтобы сервис начал жить... ну когда будет что-то работающее. 
 
+---
+
+в папке src/main/resources/ создать папку cert и сгенерировать там private.pem и public.pem
+```
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -pubout -out public.pem
+```
+в отдельном терминале запуск backend из корневой папки проекта: `make run`
+
+
+в другом терминале запустить frontend из папки frontend: `npm install' и `npm run dev`
+
+
+открыть в браузере http://localhost:3000/
+
+
+для входа: email `123@123.com` пароль `123123123`
+
+
