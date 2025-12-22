@@ -41,7 +41,7 @@ openssl rsa -in private.pem -pubout -out public.pem
 в отдельном терминале запуск backend из корневой папки проекта: `make run`
 
 
-в другом терминале запустить frontend из папки frontend: `npm install' и `npm run dev`
+в другом терминале запустить frontend из папки frontend: `npm install` и `npm run dev`
 
 
 открыть в браузере http://localhost:3000/
