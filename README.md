@@ -22,7 +22,7 @@
 
 ## Технологии
 - **Сервер**: Java (Spring Boot), Spring Boot JPA
-- **Фронтенд**: Генерация на ИИ
+- **Фронтенд**: Генерация на ИИ (стек: React, TypeScript, Vite, React Router, Axios,Tailwind CSS с daisyUI)
 
 ## Помощь нужна
 Если владеете фронтендом — буду рад помощи! Пишите в [Telegram](https://t.me/that_is_myname).
