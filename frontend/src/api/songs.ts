@@ -1,4 +1,5 @@
 // src/api/songs.ts
+
 import http from './http';
 import { Song, SongChord, ApiResponse } from '../types';
 
@@ -8,6 +9,9 @@ export interface SongUpsert {
     comment: string;
     lyrics: string;
     chords: SongChord[];
+    scrollSpeed: number;
+    fontSize: number;
+    tonality: number | null;
 }
 
 export interface ArtistTitleDto {
@@ -23,18 +27,18 @@ export const songsApi = {
         dir: 'asc' | 'desc' = 'asc'
     ): Promise<ArtistTitleDto[]> => {
         const params = new URLSearchParams();
-        if (q && q.trim()) params.set('q', q.trim());
+        if (q) params.set('q', q.trim());
         params.set('sortBy', sortBy);
         params.set('dir', dir);
-
         const response = await http.get<ApiResponse<ArtistTitleDto[]>>(
             `/song?${params.toString()}`
         );
         return response.data.data;
     },
 
-    getById: async (id: number): Promise<Song> => {
-        const response = await http.get<ApiResponse<Song>>(`/song/${id}`);
+    getById: async (id: number, ton?: number): Promise<Song> => {
+        const params = ton !== undefined ? { ton } : {};
+        const response = await http.get<ApiResponse<Song>>(`/song/${id}`, { params });
         return response.data.data;
     },
 
@@ -49,6 +53,15 @@ export const songsApi = {
     },
 
     delete: async (id: number): Promise<void> => {
-        await http.delete<ApiResponse<void>>(`/song/${id}`);
+        await http.delete(`/song/${id}`);
+    },
+
+    importSong: async (data: {
+        artist: string;
+        title: string;
+        rawText: string
+    }): Promise<Song> => {
+        const response = await http.post<ApiResponse<Song>>('/song/parse', data);
+        return response.data.data;
     },
 };

@@ -113,7 +113,7 @@ export const SongViewPage = () => {
     };
 
     const increaseScrollSpeed = () => {
-        setScrollSpeed((prev) => Math.min(prev + 1, 10));
+        setScrollSpeed((prev) => Math.min(prev + 1, 20));
     };
 
     const decreaseScrollSpeed = () => {
@@ -232,7 +232,7 @@ export const SongViewPage = () => {
                                 type="button"
                                 className="btn btn-ghost btn-xs min-h-0 h-6 w-6 p-0 hover:bg-emerald-100 disabled:opacity-30"
                                 onClick={increaseScrollSpeed}
-                                disabled={scrollSpeed >= 10}
+                                disabled={scrollSpeed >= 20}
                                 title="Увеличить скорость прокрутки"
                             >
                                 +

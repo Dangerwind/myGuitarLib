@@ -13,7 +13,7 @@ public class SongChordDto {
 
     private Integer scrollSpeed;
     private Integer fontSize;
-    private Integer tonality;
+    // private Integer tonality;
 
     private int lineIndex;
     private int charIndex;

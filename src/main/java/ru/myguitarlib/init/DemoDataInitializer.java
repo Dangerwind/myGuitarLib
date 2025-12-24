@@ -10,8 +10,10 @@ import ru.myguitarlib.model.User;
 import ru.myguitarlib.model.enums.RoleType;
 import ru.myguitarlib.model.song.Song;
 import ru.myguitarlib.model.song.SongChord;
+import ru.myguitarlib.repository.SongChordRepository;
 import ru.myguitarlib.repository.SongRepository;
 import ru.myguitarlib.repository.UserRepository;
+import ru.myguitarlib.utilites.ChordParser;
 
 @Component
 @Profile("dev")
@@ -21,6 +23,7 @@ public class DemoDataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SongRepository songRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ChordParser chordParser;
 
     @Override
     @Transactional
@@ -83,6 +86,133 @@ public class DemoDataInitializer implements CommandLineRunner {
         addChord(s3, 1, 0, "F");
         addChord(s3, 1, 16, "G");
         songRepository.save(s3);
+
+        String rawText = """
+                Куплет1:
+                Am               F
+                Мы все живём с закрытыми глазами,
+                Dm      E  
+                высоко поднятыми в небеса.
+                Am            F 
+                Кто объяснит, что случилось с нами?
+                Dm                   E             Am  
+                Произошло всё это сколько лет назад?
+                     F       Dm
+                Придёт ли кто,
+                                    E            Am
+                чтобы однажды наши веки распахнуть,
+                    F         G Am
+                когда-нибудь?
+                
+                ПРИПЕВ:
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                               Em
+                кто расскажет, ради чего жить
+                            Am
+                и о чём мечтать.
+                
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                         Em     
+                кто поведёт за собой.
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                                  Em 
+                кто научит нас бороться до конца
+                           Am
+                и не отступать.
+                
+                              F
+                Миру нужен герой,
+                            G
+                кто-то простой,
+                            Em
+                похожий на нас с тобой.
+                
+                Куплет2:
+                Am                 F
+                Мы все живём с закрытыми глазами,
+                Dm             E
+                хоть ощущаем что-то здесь не так,
+                Am             F
+                а с колеи, проверенной годами,
+                Dm                    E            Am
+                мы в сторону боимся сделать даже шаг.
+                    F     Dm
+                Но он придёт,
+                                    E              Am
+                чтобы однажды наши веки распахнуть.
+                  F       G Am
+                Укажет путь.
+                
+                ПРИПЕВ:
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                               Em
+                кто расскажет, ради чего жить
+                            Am
+                и о чём мечтать.
+                
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                         Em     
+                кто поведёт за собой.
+                              F
+                Миру нужен герой,
+                          G
+                кто-то такой,
+                                  Em 
+                кто научит нас бороться до конца
+                           Am
+                и не отступать.
+                
+                              F
+                Миру нужен герой,
+                            G
+                кто-то простой,
+                            Em       
+                похожий на нас с тобой. 
+                
+                Кода:
+                             F
+                Такой же как ты.
+                               G        Em         Am
+                И пусть он до чёртиков боится высоты.
+                             F
+                Такой же как я,
+                             G          Em           Am
+                промокший до нитки от внезапного дождя.
+                              F
+                Такой же как тот,
+                           G           Em            Am 
+                кто дома ключи забыл и у подъезда ждёт.
+                              F  G
+                Такой же простой,
+                                 Em  Am
+                но миру нужен герой.
+                              F  G
+                Миру нужен герой.
+                              Em  Am
+                Миру нужен герой.
+                
+                """;
+
+        Song s4 = chordParser.parser("123-test-123", "00-ttt-00", rawText);
+        s4.setOwner(user);
+        s4.setComment("Andrei Andrei");
+        songRepository.save(s4);
+
     }
 
     private void addChord(Song song, int lineIndex, int charIndex, String chord) {
@@ -91,6 +221,7 @@ public class DemoDataInitializer implements CommandLineRunner {
         sc.setLineIndex(lineIndex);
         sc.setCharIndex(charIndex);
         sc.setChord(chord);
+
         song.getChords().add(sc);
     }
 }

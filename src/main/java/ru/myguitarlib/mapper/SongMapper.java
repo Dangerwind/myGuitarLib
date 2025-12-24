@@ -15,7 +15,7 @@ public final class SongMapper {
         SongDto dto = new SongDto();
 
         dto.setFontSize(song.getFontSize());
-        dto.setTonality(song.getTonality());
+     //   dto.setTonality(song.getTonality());
         dto.setScrollSpeed(song.getScrollSpeed());
 
         dto.setId(song.getId());
@@ -38,7 +38,7 @@ public final class SongMapper {
         song.setComment(dto.getComment());
         song.setLyrics(dto.getLyrics());
 
-        song.setTonality(dto.getTonality());
+      //  song.setTonality(dto.getTonality());
         song.setScrollSpeed(dto.getScrollSpeed());
         song.setFontSize(dto.getFontSize());
 

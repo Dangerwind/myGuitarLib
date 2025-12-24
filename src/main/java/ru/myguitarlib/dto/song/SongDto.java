@@ -14,7 +14,7 @@ public class SongDto {
 
     private Integer scrollSpeed;
     private Integer fontSize;
-    private Integer tonality;
+  //  private Integer tonality;
 
     private String artist;
     private String title;

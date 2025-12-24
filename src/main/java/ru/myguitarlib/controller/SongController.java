@@ -1,6 +1,7 @@
 package ru.myguitarlib.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.myguitarlib.dto.ApiResponse;
 import ru.myguitarlib.dto.song.ArtistTitleDto;
 import ru.myguitarlib.dto.song.SongDto;
+import ru.myguitarlib.dto.song.SongParseDto;
 import ru.myguitarlib.dto.song.SongUpsertDto;
 import ru.myguitarlib.exception.ApiException;
 import ru.myguitarlib.mapper.SongMapper;
@@ -18,6 +20,9 @@ import ru.myguitarlib.model.User;
 import ru.myguitarlib.model.song.Song;
 import ru.myguitarlib.repository.SongRepository;
 import ru.myguitarlib.repository.UserRepository;
+import ru.myguitarlib.utilites.ChordParser;
+import ru.myguitarlib.utilites.ChordTransposer;
+
 
 import java.util.List;
 
@@ -28,6 +33,34 @@ public class SongController {
 
     private final SongRepository songRepository;
     private final UserRepository userRepository;
+    private final ChordParser chordParser;
+
+
+    @Autowired
+    private ChordTransposer transposer;
+
+    // ---------- парсер слов и аккордов ----------
+    @PostMapping("/parse")
+    public ResponseEntity<ApiResponse<SongDto>> parseSong(
+            @RequestBody SongParseDto dto,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long userId = getUser(jwt).getId();
+        var user = userRepository.findById(userId)
+                .orElseThrow( () -> new  ApiException("USER_NOT_FOUND", "Проблема доступа", HttpStatus.UNAUTHORIZED));
+
+        Song song = chordParser.parser(dto.getArtist(), dto.getTitle(), dto.getRawText());
+        song.setOwner(user);
+        song.setComment("");
+        song = songRepository.save(song);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(true, "Песня создана", SongMapper.toDto(song), List.of()));
+
+    }
+
+
+
 
     // ---------- READ: list + search + sort ----------
     @GetMapping
@@ -54,14 +87,28 @@ public class SongController {
 
     // ---------- READ: one ----------
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<SongDto>> getSong(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ApiResponse<SongDto>> getSong(
+            @RequestParam(required = false) Integer ton,
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
         Long userId = getUser(jwt).getId();
 
         Song song = songRepository.findByIdAndOwnerIdWithChords(id, userId)
                 .orElseThrow(() -> new ApiException("SONG_NOT_FOUND", "Песня не найдена", HttpStatus.NOT_FOUND));
 
+       // ChordTransposer - транспонирование
+
+        int tonality = ton != null ? ton : 0;
+
+        for (var chh : song.getChords()) {
+            chh.setChord(transposer.transpose(chh.getChord(), tonality));
+            // chh.setChord("ton="+tonality);
+        }
+
+
         return ResponseEntity.ok(new ApiResponse<>(true, "Песня получена", SongMapper.toDto(song), List.of()));
     }
+
 
     // ---------- CREATE ----------
     @PostMapping
