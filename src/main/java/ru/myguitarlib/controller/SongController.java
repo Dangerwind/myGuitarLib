@@ -156,7 +156,6 @@ public class SongController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Песня удалена", null, List.of()));
     }
 
-    // ================= helpers =================
 
     private String normalizeQuery(String q) {
         if (q == null) return null;

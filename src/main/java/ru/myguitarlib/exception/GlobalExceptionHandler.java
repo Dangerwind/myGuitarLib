@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
                 ));
     }
 
-// наше исключение
+//  исключение
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiResponse<Void>> handleApiException(ApiException ex) {
         return ResponseEntity.status(ex.getStatus())

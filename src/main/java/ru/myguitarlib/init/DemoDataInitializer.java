@@ -208,9 +208,9 @@ public class DemoDataInitializer implements CommandLineRunner {
                 
                 """;
 
-        Song s4 = chordParser.parser("123-test-123", "00-ttt-00", rawText);
+        Song s4 = chordParser.parser("Обними кита", "Миру нужен герой", rawText);
         s4.setOwner(user);
-        s4.setComment("Andrei Andrei");
+        s4.setComment("тест на парсинг текстов с аккордами");
         songRepository.save(s4);
 
     }

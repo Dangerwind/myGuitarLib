@@ -27,7 +27,7 @@ public class SongChord {
     @JoinColumn(name = "song_id")
     private Song song;
 
-    private int lineIndex;     // номер строки в lyrics (0-based)
-    private int charIndex;     // индекс символа в строке (0-based)
+    private int lineIndex;     // номер строки в lyrics
+    private int charIndex;     // индекс символа в строке
     private String chord;      // "Am", "Dm/F", и т.п.
 }
