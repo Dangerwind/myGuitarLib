@@ -49,7 +49,7 @@ export const SongViewPage = () => {
 
         if (scrollSpeed === 0) return;
 
-        const interval = 1000 / scrollSpeed;
+        const interval = 500 / scrollSpeed;
 
         scrollIntervalRef.current = window.setInterval(() => {
             window.scrollBy(0, 1);
