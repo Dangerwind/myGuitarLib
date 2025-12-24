@@ -28,7 +28,7 @@
 
 ---
 
-# Для запускаЖ
+# Для запуска
 
 в папке src/main/resources/ создать папку cert и сгенерировать там private.pem и public.pem
 ```
@@ -37,13 +37,26 @@ openssl rsa -in private.pem -pubout -out public.pem
 ```
 в отдельном терминале запуск backend из корневой папки проекта: `make run`
 
-
 в другом терминале запустить frontend из папки frontend: `npm install` и `npm run dev`
-
 
 открыть в браузере http://localhost:3000/
 
+для входа: email `123@123.com` пароль `123123123` или зарегистрироваться со своим email и паролем
 
-для входа: email `123@123.com` пароль `123123123`
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/01-login.png)
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/02-registrate.png)
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/03-edit.png)
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/04-all-songs.png)
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/05-import.png)
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/06-show-song.png)
+
+---
+# Что надо сделать
+
+1) "Поделиться" копировать ссылку и потом ее открывать без регитстрации и авторизации для просмотра
+
+Добавить эндпоинт для обработки просмотра ссылки которая пришла из "поделиться"
+
+Добавить "скопировать к себе" если открыть ссылку-поделиться и человек вошел под своим паролем
 
 
