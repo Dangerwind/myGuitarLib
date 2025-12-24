@@ -1,6 +1,7 @@
 # myGuitarLib
 
 Проект сервиса **личной библиотеки текстов песен с аккордами** для планшета, телефона или ноутбука. Удобно играть на гитаре и петь!
+![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/04-all-songs.png)
 
 ## Проблема
 Песни постоянно забываются, а поиск в интернете каждый раз даёт разные аккорды — приходится проверять. Тексты неудобные, аккорды часто только на первом куплете, а нужны на каждой строке.
@@ -46,7 +47,6 @@ openssl rsa -in private.pem -pubout -out public.pem
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/01-login.png)
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/02-registrate.png)
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/03-edit.png)
-![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/04-all-songs.png)
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/05-import.png)
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/06-show-song.png)
 
