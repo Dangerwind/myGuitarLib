@@ -45,7 +45,8 @@ openssl rsa -in private.pem -pubout -out public.pem
 
 открыть в браузере http://localhost:3000/
 
-для входа: email `123@123.com` пароль `123123123` или зарегистрироваться со своим email и паролем
+для входа: email `123@123.com` пароль `123123123` и тогда там уже будет несколько тестовых песен с аккордами
+или зарегистрироваться со своим email и паролем
 
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/01-login.png)
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/02-registrate.png)
