@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Хранитель песен — Инструкция</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky: #0ea5e9;
+      --indigo: #6366f1;
+      --dark: #1e293b;
+      --mid: #64748b;
+      --light: #f1f5f9;
+      --white: #ffffff;
+      --grad: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 50%, #fce7f3 100%);
+      --accent-grad: linear-gradient(135deg, #0ea5e9, #6366f1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Geologica', sans-serif;
+      background: var(--grad);
+      color: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 52px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+      white-space: nowrap;
+      margin-right: 12px;
+    }
+    .nav-logo .icon {
+      width: 30px; height: 30px;
+      border: 2px solid var(--dark);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .nav-link {
+      font-size: 12px;
+      color: var(--mid);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .nav-link:hover { background: var(--light); color: var(--dark); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99,102,241,0.1);
+      color: var(--indigo);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(99,102,241,0.2);
+    }
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      line-height: 1.15;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--mid);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .section-num {
+      width: 36px; height: 36px;
+      background: var(--accent-grad);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .section-label h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .section-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .section-body.wide { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .section-body { grid-template-columns: 1fr; }
+    }
+    .section-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #475569;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+    .section-text p:last-child { margin-bottom: 0; }
+    .tip {
+      background: rgba(14,165,233,0.07);
+      border-left: 3px solid var(--sky);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #0369a1;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+    .tip strong { font-weight: 600; }
+
+    /* ── UI MOCKUPS ── */
+    .mockup {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.3);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .mockup-header {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .mockup-header-white {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .mockup-logo {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; color: white;
+    }
+    .mockup-logo-white {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; color: #1e293b;
+    }
+    .mockup-logo .ico, .mockup-logo-white .ico {
+      width: 24px; height: 24px;
+      border: 2px solid rgba(255,255,255,0.7);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+    .mockup-logo-white .ico { border-color: #1e293b; }
+    .mockup-body { padding: 14px; }
+    .mcard {
+      background: rgba(241,245,249,0.6);
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+    .mcard:last-child { margin-bottom: 0; }
+    .mfield {
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 6px;
+      background: white;
+    }
+    .mbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: default;
+    }
+    .mbtn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+    }
+    .mbtn-ghost {
+      background: rgba(241,245,249,0.8);
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+    .mbtn-white {
+      background: white;
+      color: #6366f1;
+      font-weight: 700;
+    }
+    .mrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 11px;
+    }
+    .mrow:last-child { border-bottom: none; }
+    .artist { font-weight: 600; color: #1e293b; }
+    .msong-title { color: #64748b; }
+    .chord { color: #0369a1; font-weight: 700; font-family: monospace; }
+    .lyric { font-family: monospace; font-size: 11px; color: #334155; }
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(99,102,241,0.08);
+      border-radius: 8px;
+      padding: 4px 7px;
+    }
+    .ctrl-btn {
+      width: 18px; height: 18px;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      color: #475569;
+      cursor: default;
+    }
+    .ctrl-val {
+      font-size: 10px;
+      font-weight: 700;
+      color: #6366f1;
+      min-width: 18px;
+      text-align: center;
+    }
+    .ctrl-group-green { background: rgba(16,185,129,0.1); }
+    .ctrl-val-green { color: #059669; }
+
+    /* share modal */
+    .modal-overlay {
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      width: 100%;
+      max-width: 220px;
+      font-size: 11px;
+    }
+    .modal-title { font-weight: 700; color: #1e293b; margin-bottom: 8px; font-size: 12px; }
+    .modal-url {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-family: monospace;
+      font-size: 9px;
+      color: #6366f1;
+      margin-bottom: 8px;
+      word-break: break-all;
+    }
+
+    /* share banner */
+    .share-banner {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+    }
+    .share-banner strong { color: white; }
+
+    /* import mockup */
+    .mtextarea {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-family: 'Courier New', Consolas, Monaco, monospace;
+      font-size: 9.5px;
+      color: #64748b;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      min-height: 60px;
+      white-space: pre-wrap;
+    }
+
+    /* feature list */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 48px 0;
+    }
+    @media (max-width: 640px) {
+      .features { grid-template-columns: 1fr 1fr; }
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid rgba(148,163,184,0.25);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .2s;
+    }
+    .feature-card:hover { transform: translateY(-2px); }
+    .feature-icon { font-size: 24px; margin-bottom: 8px; }
+    .feature-title { font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+    .feature-desc { font-size: 11px; color: var(--mid); line-height: 1.5; }
+
+    /* divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(99,102,241,0.2), transparent);
+      margin: 16px 0 56px;
+    }
+
+    /* kbd */
+    kbd {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-family: monospace;
+      color: #475569;
+    }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--mid);
+      font-size: 13px;
+    }
+    footer .logo { font-size: 28px; margin-bottom: 8px; }
+
+    /* tag */
+    .tag {
+      display: inline-flex;
+      background: rgba(14,165,233,0.1);
+      color: #0369a1;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .step {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+    .step-dot {
+      width: 20px; height: 20px;
+      background: var(--accent-grad);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step p { font-size: 13px; color: #475569; line-height: 1.6; }
+
+    /* search bar mock */
+    .msearch {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .section { animation: fadeUp .5s ease both; }
+    .section:nth-child(2) { animation-delay: .05s; }
+    .section:nth-child(3) { animation-delay: .1s; }
+    .section:nth-child(4) { animation-delay: .15s; }
+    .section:nth-child(5) { animation-delay: .2s; }
+    .section:nth-child(6) { animation-delay: .25s; }
+    .section:nth-child(7) { animation-delay: .3s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><div class="icon">🎸</div>Хранитель песен</div>
+    <a href="#start" class="nav-link">Начало работы</a>
+    <a href="#songs" class="nav-link">Список песен</a>
+    <a href="#add" class="nav-link">Добавить песню</a>
+    <a href="#view" class="nav-link">Просмотр</a>
+    <a href="#import" class="nav-link">Импорт</a>
+    <a href="#transpose" class="nav-link">Тональность</a>
+    <a href="#share" class="nav-link">Поделиться</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🎸 Руководство пользователя</div>
+  <h1>Хранитель песен</h1>
+  <p>Твоя личная библиотека песен с аккордами. Добавляй, редактируй и играй в удобном темпе с автопрокруткой.</p>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <div class="feature-title">Библиотека</div>
+      <div class="feature-desc">Все твои песни в одном месте, с поиском и сортировкой</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎵</div>
+      <div class="feature-title">Аккорды</div>
+      <div class="feature-desc">Аккорды расставляются прямо над нужными словами, можно транспонировать под себя</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📜</div>
+      <div class="feature-title">Автопрокрутка</div>
+      <div class="feature-desc">Настраиваемая скорость — руки свободны для игры</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔤</div>
+      <div class="feature-title">Размер шрифта</div>
+      <div class="feature-desc">Идеально читается на телефоне, планшете и ноутбуке</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📥</div>
+      <div class="feature-title">Импорт</div>
+      <div class="feature-desc">Вставь текст с аккордами — сайт разберёт его сам</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <div class="feature-title">Поделиться</div>
+      <div class="feature-desc">Отправь ссылку другу — он увидит и сохранит песню</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 1. РЕГИСТРАЦИЯ ── -->
+<div id="start" class="section">
+  <div class="section-label">
+    <div class="section-num">1</div>
+    <h2>Регистрация и вход</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Чтобы начать пользоваться сайтом, нужно создать аккаунт. Нажми кнопку <strong>«Зарегистрироваться»</strong> на стартовой странице.</p>
+      <div class="step"><div class="step-dot">1</div><p>Введи свой <strong>email</strong> — он будет использоваться для входа.</p></div>
+      <div class="step"><div class="step-dot">2</div><p>Введи <strong>имя</strong> — как к тебе обращаться на сайте.</p></div>
+      <div class="step"><div class="step-dot">3</div><p>Придумай <strong>пароль</strong> — не менее 6 символов.</p></div>
+      <div class="step"><div class="step-dot">4</div><p>Нажми <strong>«Создать аккаунт»</strong> — сразу попадёшь в свою библиотеку.</p></div>
+      <div class="tip"><strong>Уже есть аккаунт?</strong> Нажми «Войти» и введи email и пароль.</div>
+      <div class="tip" style="margin-top:8px;"><strong>Забыли пароль?</strong> На странице входа нажми <strong>«Забыли пароль?»</strong> — введи свой email и мы пришлём ссылку для смены пароля.</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div style="background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 100%); padding: 18px; display: flex; justify-content: center;">
+          <div style="background: white; border-radius: 14px; padding: 18px; width: 200px; box-shadow: 0 8px 32px rgba(99,102,241,0.12);">
+            <div style="text-align: center; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; border: 2px solid #1e293b; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin: 0 auto 8px;">🎸</div>
+              <div style="font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700; color: #1e293b;">Хранитель песен</div>
+              <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Создай аккаунт</div>
+            </div>
+            <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Email</div>
+            <div class="mfield" style="color:#94a3b8;">your@email.com</div>
+            <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Имя</div>
+            <div class="mfield">Как к тебе обращаться</div>
+            <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Пароль</div>
+            <div class="mfield">••••••••</div>
+            <div class="mbtn mbtn-primary" style="width: 100%; justify-content: center; margin-top: 8px; border-radius: 7px; padding: 8px;">Создать аккаунт</div>
+            <div style="text-align: center; margin-top: 10px; font-size: 9px; color: #94a3b8;">Уже есть аккаунт? <span style="color: #6366f1; font-weight: 600;">Войти</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 2. СПИСОК ПЕСЕН ── -->
+<div id="songs" class="section">
+  <div class="section-label">
+    <div class="section-num">2</div>
+    <h2>Список песен</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>После входа ты попадёшь в свою библиотеку — список всех твоих песен. Здесь можно быстро найти нужную и перейти к просмотру.</p>
+      <div class="step"><div class="step-dot">🔍</div><p><strong>Поиск</strong> — вводи имя исполнителя или название, список обновится автоматически.</p></div>
+      <div class="step"><div class="step-dot">↕</div><p><strong>Сортировка</strong> — выбери «По исполнителю» или «По названию», нажми ещё раз — изменится направление (↑↓).</p></div>
+      <div class="step"><div class="step-dot">🎵</div><p>Нажми на любую песню в списке — откроется страница просмотра.</p></div>
+      <div class="tip"><strong>В шапке</strong> справа: кнопка <strong>➕</strong> — добавить новую песню, кнопка <strong>Выйти</strong> — выход из аккаунта.</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div class="mockup-header-white">
+          <div class="mockup-logo-white"><div class="ico">🎸</div>Хранитель песен</div>
+          <div style="display: flex; gap: 5px;">
+            <div class="mbtn mbtn-ghost">➕</div>
+            <div class="mbtn mbtn-ghost">Выйти</div>
+          </div>
+        </div>
+        <div class="mockup-body">
+          <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">Мои песни</div>
+          <div class="msearch">🔍 Поиск по исполнителю или названию…</div>
+          <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+            <div class="mbtn mbtn-ghost" style="flex: 1; justify-content: center; background: rgba(99,102,241,0.1); color: #6366f1; border-color: transparent;">По исполнителю ↑</div>
+            <div class="mbtn mbtn-ghost" style="flex: 1; justify-content: center;">По названию</div>
+          </div>
+          <div class="mrow">
+            <div><div class="artist">Виктор Цой</div><div class="msong-title">Группа крови</div></div>
+            <span style="color: #94a3b8; font-size: 13px;">›</span>
+          </div>
+          <div class="mrow">
+            <div><div class="artist">Кино</div><div class="msong-title">Последний герой</div></div>
+            <span style="color: #94a3b8; font-size: 13px;">›</span>
+          </div>
+          <div class="mrow">
+            <div><div class="artist">ДДТ</div><div class="msong-title">Это всё</div></div>
+            <span style="color: #94a3b8; font-size: 13px;">›</span>
+          </div>
+          <div class="mrow">
+            <div><div class="artist">Сплин</div><div class="msong-title">Романс</div></div>
+            <span style="color: #94a3b8; font-size: 13px;">›</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 3. ДОБАВЛЕНИЕ ПЕСНИ ── -->
+<div id="add" class="section">
+  <div class="section-label">
+    <div class="section-num">3</div>
+    <h2>Добавление и редактирование песни</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Нажми <strong>«➕ Добавить песню»</strong> в шапке или из просмотра конкретной песни нажми <strong>«Редактировать»</strong>.</p>
+      <div class="step"><div class="step-dot">1</div><p>Заполни <strong>Исполнителя</strong> и <strong>Название</strong> — обязательные поля.</p></div>
+      <div class="step"><div class="step-dot">2</div><p><strong>Комментарий</strong> — необязательно. Например, тональность, строй или личная заметка.</p></div>
+      <div class="step"><div class="step-dot">3</div><p>Каждая строка песни состоит из двух полей: верхнее — <strong>аккорды</strong> (синим), нижнее — <strong>текст</strong>.</p></div>
+      <div class="step"><div class="step-dot">4</div><p>Аккорды пишутся над нужным слогом — они будут отображаться ровно над ним при просмотре.</p></div>
+      <div class="step"><div class="step-dot">5</div><p>Нажми <kbd>Enter</kbd> в поле текста — добавится новая строка.</p></div>
+      <div class="tip"><strong>Кнопка «Сохранить»</strong> — сверху страницы. Изменения не сохраняются автоматически.</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div class="mockup-header-white" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 14px;">
+          <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <div class="mockup-logo-white"><div class="ico">🎸</div>Хранитель песен</div>
+            <div style="display:flex;gap:4px;">
+              <div class="mbtn mbtn-ghost" style="font-size: 9px;">← Отменить</div>
+              <div class="mbtn mbtn-primary" style="font-size: 9px; padding: 4px 8px;">💾 Сохранить</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-body">
+          <div style="font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">Редактировать песню</div>
+          <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+            <div style="flex: 1;">
+              <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Исполнитель</div>
+              <div class="mfield">Виктор Цой</div>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Название</div>
+              <div class="mfield">Группа крови</div>
+            </div>
+          </div>
+          <div style="font-size: 9px; color: #64748b; margin-bottom: 3px;">Комментарий</div>
+          <div class="mfield" style="color: #94a3b8;">необязательно</div>
+          <div style="font-size: 9px; font-weight: 600; color: #64748b; margin: 8px 0 5px; text-transform: uppercase; letter-spacing: .5px;">Строки</div>
+          <!-- Line 1 -->
+          <div style="border: 1px solid #e2e8f0; border-radius: 7px; overflow: hidden; margin-bottom: 5px;">
+            <div style="background: #eff6ff; padding: 5px 8px; font-family: monospace; font-size: 10px; color: #0369a1; border-bottom: 1px solid #e2e8f0;">Am        G</div>
+            <div style="padding: 5px 8px; font-family: monospace; font-size: 10px; color: #334155;">Группа крови на рукаве</div>
+          </div>
+          <!-- Line 2 -->
+          <div style="border: 1px solid #e2e8f0; border-radius: 7px; overflow: hidden; margin-bottom: 8px;">
+            <div style="background: #eff6ff; padding: 5px 8px; font-family: monospace; font-size: 10px; color: #0369a1; border-bottom: 1px solid #e2e8f0;">C             F</div>
+            <div style="padding: 5px 8px; font-family: monospace; font-size: 10px; color: #334155;">Мой порядковый номер на рукаве</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 4. ПРОСМОТР ── -->
+<div id="view" class="section">
+  <div class="section-label">
+    <div class="section-num">4</div>
+    <h2>Просмотр песни</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Основной режим для игры. Аккорды расположены ровно над нужными словами. Настройки шрифта и скорости применяются только на время просмотра — чтобы сохранить навсегда, измени в редакторе.</p>
+
+      <p style="margin-top: 14px; font-weight: 600; color: #334155; font-size: 13px;">🔤 Размер шрифта</p>
+      <p>Кнопки <kbd>−</kbd> и <kbd>+</kbd> в блоке «Шрифт». Диапазон: от −3 до +5.</p>
+
+      <p style="margin-top: 12px; font-weight: 600; color: #334155; font-size: 13px;">📜 Автопрокрутка</p>
+      <p>Блок «Скорость» — <kbd>+</kbd> запускает прокрутку, <kbd>−</kbd> замедляет или останавливает. Темп 5–8 для спокойных песен, 12–15 для быстрых.</p>
+
+      <p style="margin-top: 12px; font-weight: 600; color: #334155; font-size: 13px;">📱 Экран не гаснет</p>
+      <p>На мобильных устройствах экран автоматически останется активным. Руки свободны!</p>
+
+      <div class="tip"><strong>Кнопки в шапке:</strong> ✏️ Редактировать · 📤 Поделиться · ← Назад</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div class="mockup-header">
+          <div class="mockup-logo"><div class="ico">🎸</div>Хранитель песен</div>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <div class="ctrl-group">
+              <span style="font-size: 9px; color: rgba(255,255,255,0.7);">Шрифт</span>
+              <div class="ctrl-btn" style="color: white;">−</div>
+              <div class="ctrl-val" style="color: white;">0</div>
+              <div class="ctrl-btn" style="color: white;">+</div>
+            </div>
+            <div class="ctrl-group ctrl-group-green" style="background: rgba(255,255,255,0.2);">
+              <span style="font-size: 9px; color: rgba(255,255,255,0.7);">Скорость</span>
+              <div class="ctrl-btn" style="color: white;">−</div>
+              <div class="ctrl-val" style="color: white;">5</div>
+              <div class="ctrl-btn" style="color: white;">+</div>
+            </div>
+            <div class="mbtn mbtn-white" style="font-size: 9px; padding: 3px 7px;">📤</div>
+            <div class="mbtn" style="background: rgba(255,255,255,0.2); color: white; font-size: 9px; padding: 3px 7px;">✏️</div>
+          </div>
+        </div>
+        <div class="mockup-body">
+          <div style="margin-bottom: 10px;">
+            <div style="font-weight: 700; font-size: 14px; color: #1e293b;">Группа крови</div>
+            <div style="font-size: 11px; color: #64748b;">Виктор Цой</div>
+          </div>
+          <div style="font-family: monospace; font-size: 11px; line-height: 1.7;">
+            <div class="chord">Am        G</div>
+            <div class="lyric">Группа крови на рукаве</div>
+            <div class="chord">C             F</div>
+            <div class="lyric">Мой порядковый номер на рукаве</div>
+            <div style="height: 6px;"></div>
+            <div class="chord">Am   G</div>
+            <div class="lyric">Пожелай мне удачи в бою</div>
+            <div class="chord">C        F</div>
+            <div class="lyric">Пожелай мне не остаться в этой траве</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 4б. ТРАНСПОНИРОВАНИЕ ── -->
+<div id="transpose" class="section">
+  <div class="section-label">
+    <div class="section-num">🎼</div>
+    <h2>Транспонирование</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Если тебе неудобно играть в оригинальной тональности — можно сдвинуть все аккорды вверх или вниз на любое количество полутонов.</p>
+      <div class="step"><div class="step-dot">👁</div><p><strong>В режиме просмотра</strong> — блок «Тональность» в шапке. Нажимай «+» и «−» — аккорды изменятся сразу. <em>Эта настройка временная — при следующем открытии аккорды вернутся в оригинал.</em></p></div>
+      <div class="step"><div class="step-dot">✏️</div><p><strong>В режиме редактирования</strong> — блок «Тональность» в панели настроек. Изменил тональность и нажал <strong>«💾 Сохранить»</strong> в шапке — новая тональность сохранится навсегда.</p></div>
+      <div class="tip"><strong>Шаг</strong> — один клик = один полутон. Для перехода, например, из Ля-минора в До-минор нужно нажать «+» три раза.</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div class="mockup-header">
+          <div class="mockup-logo"><div class="ico">🎸</div>Хранитель песен</div>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <div class="ctrl-group"><span style="font-size:9px;color:rgba(255,255,255,0.7);">Шрифт</span><div class="ctrl-btn" style="color:white;">−</div><div class="ctrl-val" style="color:white;">0</div><div class="ctrl-btn" style="color:white;">+</div></div>
+            <div class="ctrl-group" style="background:rgba(245,158,11,0.3);">
+              <span style="font-size:9px;color:rgba(255,255,255,0.7);">Тональность</span>
+              <div class="ctrl-btn" style="color:white;">−</div>
+              <div class="ctrl-val" style="color:white;">+3</div>
+              <div class="ctrl-btn" style="color:white;">+</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-body">
+          <div style="font-family:monospace;font-size:11px;line-height:1.7;">
+            <div style="font-size:10px;color:#64748b;margin-bottom:6px;">Аккорды транспонированы на +3 полутона</div>
+            <div class="chord">Cm        A#</div>
+            <div class="lyric">Группа крови на рукаве</div>
+            <div class="chord">D#            G#</div>
+            <div class="lyric">Мой порядковый номер на рукаве</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 5. ИМПОРТ ── -->
+<div id="import" class="section">
+  <div class="section-label">
+    <div class="section-num">5</div>
+    <h2>Импорт из буфера</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Если у тебя уже есть текст песни с аккордами — найденный в интернете, присланный другом или сохранённый где угодно — можно не вводить всё вручную — просто вставь его и нажми «Импортировать».</p>
+      <div class="step"><div class="step-dot">1</div><p>На странице редактирования песни нажми кнопку <strong>«📥 Импорт из буфера»</strong>.</p></div>
+      <div class="step"><div class="step-dot">2</div><p>Вставь текст с аккордами в появившееся поле.</p></div>
+      <div class="step"><div class="step-dot">3</div><p>Нажми <strong>«Импортировать»</strong> — сайт разберёт аккорды и текст, разложит по строкам.</p></div>
+      <div class="step"><div class="step-dot">4</div><p>При желании отредактируй текст прямо в окне импорта — можно убрать лишние строки или что-то добавить.</p></div>
+      <div class="step"><div class="step-dot">5</div><p>Нажми <strong>«Импортировать»</strong>, проверь результат и нажми <strong>«💾 Сохранить»</strong> в шапке страницы.</p></div>
+      <div class="tip"><strong>Формат:</strong> строки чередуются — строка с аккордами, затем строка текста. Именно в таком виде хранятся тексты на большинстве сайтов с аккордами.</div>
+    </div>
+    <div>
+      <div class="mockup">
+        <div class="mockup-header-white">
+          <div class="mockup-logo-white"><div class="ico">🎸</div>Хранитель песен</div>
+          <div class="mbtn mbtn-ghost" style="font-size: 9px;">📥 Импорт из буфера</div>
+        </div>
+        <div class="mockup-body">
+          <div style="background: rgba(14,165,233,0.06); border: 1px solid rgba(14,165,233,0.2); border-radius: 10px; padding: 12px;">
+            <div style="font-size: 11px; font-weight: 600; color: #0369a1; margin-bottom: 8px;">Импорт песни из буфера</div>
+            <div class="mtextarea"><div>Am             G</div><div>Группа крови на рукаве</div><div>C                   F</div><div>Мой порядковый номер на рукаве</div><div>Am      G</div><div>Пожелай мне удачи в бою</div></div>
+            <div style="display: flex; gap: 6px;">
+              <div class="mbtn mbtn-primary" style="border-radius: 7px;">Импортировать</div>
+              <div class="mbtn mbtn-ghost" style="border-radius: 7px;">Отмена</div>
+            </div>
+          </div>
+          <div style="margin-top: 10px; font-size: 10px; color: #94a3b8; text-align: center;">↓ Результат появится в полях редактора ↓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── 6. ПОДЕЛИТЬСЯ ── -->
+<div id="share" class="section">
+  <div class="section-label">
+    <div class="section-num">6</div>
+    <h2>Поделиться песней</h2>
+  </div>
+  <div class="section-body">
+    <div class="section-text">
+      <p>Любой песней можно поделиться с другом — даже если у него нет аккаунта. Он сможет посмотреть текст с аккордами и сохранить себе.</p>
+      <div class="step"><div class="step-dot">1</div><p>На странице просмотра нажми кнопку <strong>«📤 Поделиться»</strong> в шапке.</p></div>
+      <div class="step"><div class="step-dot">2</div><p>Появится окно со ссылкой — нажми <strong>«Копировать»</strong> и отправь другу.</p></div>
+      <div class="step"><div class="step-dot">3</div><p>Друг перейдёт по ссылке и увидит песню с аккордами — <strong>без регистрации</strong>.</p></div>
+      <div class="step"><div class="step-dot">4</div><p>Если у друга есть аккаунт — он увидит кнопку <strong>«＋ Сохранить»</strong> и добавит песню к себе в библиотеку.</p></div>
+      <div class="tip"><strong>Ссылка защищена</strong> — случайно угадать её нельзя, только тот, кому ты отправил, сможет открыть песню.</div>
+    </div>
+    <div>
+      <div class="mockup" style="margin-bottom: 12px;">
+        <!-- Share modal mock -->
+        <div class="mockup-header">
+          <div class="mockup-logo"><div class="ico">🎸</div>Хранитель песен</div>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <div class="ctrl-group"><div class="ctrl-btn" style="color: white;">−</div><div class="ctrl-val" style="color:white;">0</div><div class="ctrl-btn" style="color:white;">+</div></div>
+            <div class="mbtn mbtn-white" style="font-size: 9px; padding: 3px 7px; background: rgba(255,255,255,0.35);">📤 Поделиться</div>
+          </div>
+        </div>
+        <div class="modal-overlay" style="padding: 12px; background: rgba(0,0,0,0.3);">
+          <div class="modal-box">
+            <div class="modal-title">📤 Поделиться песней</div>
+            <div style="font-size: 10px; color: #64748b; margin-bottom: 6px;">Ссылка для просмотра:</div>
+            <div class="modal-url">https://myguitarlib.ru/shared?t=AbCd1234XyZ...</div>
+            <div style="display: flex; gap: 5px;">
+              <div class="mbtn mbtn-primary" style="flex: 1; justify-content: center; border-radius: 7px; padding: 7px;">📋 Копировать</div>
+              <div class="mbtn mbtn-ghost" style="border-radius: 7px;">✕</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shared view for guest -->
+      <div class="mockup">
+        <div class="mockup-header">
+          <div class="mockup-logo"><div class="ico">🎸</div>Хранитель песен</div>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <div class="ctrl-group"><div class="ctrl-btn" style="color:white;">−</div><div class="ctrl-val" style="color:white;">0</div><div class="ctrl-btn" style="color:white;">+</div></div>
+            <div class="mbtn" style="background: white; color: #6366f1; font-weight: 700; font-size: 9px; padding: 3px 8px; border-radius: 5px;">Регистрация</div>
+            <div class="mbtn" style="background: rgba(255,255,255,0.2); color: white; font-size: 9px; padding: 3px 7px; border-radius: 5px;">Войти</div>
+          </div>
+        </div>
+        <div class="mockup-body" style="font-family: monospace; font-size: 11px;">
+          <div style="margin-bottom: 8px;"><div style="font-weight: 700; color: #1e293b; font-family: 'Geologica', sans-serif;">Группа крови</div><div style="font-size: 10px; color: #64748b; font-family: 'Geologica', sans-serif;">Виктор Цой</div></div>
+          <div class="chord">Am        G</div>
+          <div class="lyric">Группа крови на рукаве</div>
+          <div class="chord" style="margin-top: 4px;">C             F</div>
+          <div class="lyric">Мой порядковый номер на рукаве</div>
+        </div>
+        <!-- CTA for non-logged -->
+        <div style="background: linear-gradient(135deg, #0ea5e9, #6366f1); padding: 12px 14px; text-align: center; color: white;">
+          <div style="font-size: 11px; font-weight: 700; margin-bottom: 4px;">Собери свой репертуар и играй, как тебе удобно.</div>
+          <div style="font-size: 9px; opacity: .8; margin-bottom: 8px;">Бесплатно · Неограниченно песен · На любом устройстве</div>
+          <div style="display: flex; gap: 6px; justify-content: center;">
+            <div class="mbtn" style="background: white; color: #6366f1; font-weight: 700; font-size: 9px; padding: 5px 10px; border-radius: 7px;">Создать аккаунт</div>
+            <div class="mbtn" style="background: rgba(255,255,255,0.2); color: white; font-size: 9px; padding: 5px 10px; border-radius: 7px;">Войти</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- QUICK REF -->
+<div class="section">
+  <div class="section-label">
+    <div class="section-num" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">💡</div>
+    <h2>Быстрая шпаргалка</h2>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">➕</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Добавить песню</div>
+      <div style="font-size: 10px; color: #64748b;">Кнопка «➕» в шапке на странице «Мои песни»</div>
+    </div>
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">✏️</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Редактировать</div>
+      <div style="font-size: 10px; color: #64748b;">Кнопка «✏️» в шапке на странице просмотра</div>
+    </div>
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">🔤</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Шрифт крупнее</div>
+      <div style="font-size: 10px; color: #64748b;">Блок «Шрифт» → кнопка «+» в шапке просмотра</div>
+    </div>
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">📜</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Автопрокрутка</div>
+      <div style="font-size: 10px; color: #64748b;">Блок «Скорость» → «+» запускает, «−» останавливает</div>
+    </div>
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">📥</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Импорт текста</div>
+      <div style="font-size: 10px; color: #64748b;">Кнопка «📥 Импорт» в редакторе, вставь текст с аккордами</div>
+    </div>
+    <div class="mcard" style="background: white; border-color: #dbeafe; flex: 0 1 220px;">
+      <div style="font-size: 16px; margin-bottom: 5px;">🔗</div>
+      <div style="font-size: 11px; font-weight: 600; color: #1e293b; margin-bottom: 3px;">Поделиться</div>
+      <div style="font-size: 10px; color: #64748b;">Кнопка «📤» в шапке просмотра — скопируй и отправь ссылку</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">🎸</div>
+  <div style="font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Хранитель песен</div>
+  <div style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
+    Храни любимые песни с аккордами. Играй когда удобно.
+  </div>
+  <div style="font-size: 13px; color: #94a3b8;">
+    Вопросы и предложения: <a href="mailto:contact@myguitarlib.ru" style="color: #6366f1; text-decoration: none; font-weight: 600;">contact@myguitarlib.ru</a>
+  </div>
+</footer>
+
+</body>
+</html>
