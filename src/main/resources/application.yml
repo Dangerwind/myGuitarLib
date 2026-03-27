@@ -1,0 +1,54 @@
+spring:
+  profiles:
+    active: dev
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=10m
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    output:
+  web:
+    error:
+      include-message: never
+      include-binding-errors: never
+      include-exception: false
+
+  mail:
+    host: ----
+    port: ----
+    username: ----
+    password: ----
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
+app:
+  security:
+    cookie:
+      access:
+        httpOnly: true
+        secure: true
+        sameSite: Strict
+        maxAgeSeconds: 900
+      refresh:
+        httpOnly: true
+        secure: true
+        sameSite: Lax
+        maxAgeSeconds: 2592000
+    jwt:
+      access-token-validity-seconds: 900
+      refresh-token-validity-seconds: 2592000
+  share-secret: ---
