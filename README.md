@@ -1,8 +1,7 @@
 # myGuitarLib
 
-
-работает на www.myGuitarLib.ru
-
+# задеплоино на https://gгuitar.dangerwind.com/
+# полностью работает
 
 Проект сервиса **личной библиотеки текстов песен с аккордами** для планшета, телефона или ноутбука. Удобно играть на гитаре и петь!
 ![Image](https://github.com/Dangerwind/myGuitarLib/blob/main/img/04-all-songs.png)
